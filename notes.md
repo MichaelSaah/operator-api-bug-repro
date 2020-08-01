@@ -12,7 +12,7 @@ To understand why `MONITOR_HOST` is not being set to `%` on the pxc submitted di
 
 In the above code, `MONITOR_HOST` is set to `%` if the pxc's API version is >= v1.1.0. Clearly both of our pxc's API versions are v1.5.0, so we must go still deeper.
 
-The PXC's version is set here: https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.5.0/pkg/apis/pxc/v1/pxc\_types.go#L523
+The PXC's version is set here: https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.5.0/pkg/apis/pxc/v1/pxc_types.go#L523
 
 Of note is the fact that this function checks the annotation `kubectl.kubernetes.io/last-applied-configuration` for the API version. If you check the pxc object from cluster1 w/ `kubectl get pxc cluster1 -oyaml`, you will see that this annotation is set. This behavior is noted in the kubctl docs: https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/
 
