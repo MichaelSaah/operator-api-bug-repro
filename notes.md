@@ -14,8 +14,8 @@ In the above code, `MONITOR_HOST` is set to `%` if the pxc's API version is >= v
 
 The PXC's version is set here: https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.5.0/pkg/apis/pxc/v1/pxc_types.go#L523
 
-Of note is the fact that this function checks the annotation `kubectl.kubernetes.io/last-applied-configuration` for the API version. If you check the pxc object from cluster1 w/ `kubectl get pxc cluster1 -oyaml`, you will see that this annotation is set. This behavior is noted in the kubctl docs: https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/
+Of note is the fact that this function checks the annotation `kubectl.kubernetes.io/last-applied-configuration` for the API version. If you check the pxc object from cluster1 w/ `kubectl get pxc cluster1 -oyaml`, you will see that this annotation is set. This behavior is noted in the kubctl docs: https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/. Objects submitted directly to the API do not get this annotation, and so the verison is not set correctly.
 
-Furthermore, both `cluster1` and `cluster2`'s pxc objects report `apiVersion: pxc.percona.com/v1`, when this function is looking for something like `apiVersion: pxc.percona.com/v1-5-0`. I do not know why the minor and patch version numbers are being stripped.
+Regarldess of the lack of annotation, the operator should correclty parse the API version directly from the object. However, both `cluster1` and `cluster2`'s pxc objects report `apiVersion: pxc.percona.com/v1`, when this function is looking for something like `apiVersion: pxc.percona.com/v1-5-0`. I do not know why the minor and patch version numbers are being stripped.
 
-To sumamrize, the `monitor` user's host is being set incorrectly because of the lack of the env var `MONITOR_HOST`, which is used by the pxc-entrypoint script to create the user. This seems to be caused by incorrect parsing of the pxc object's api version by the operator code.
+To summarize, the `monitor` user's host is being set incorrectly because of the lack of the env var `MONITOR_HOST`, which is used by the pxc-entrypoint script to create the user. This seems to be caused by incorrect parsing of the pxc object's api version by the operator code.
