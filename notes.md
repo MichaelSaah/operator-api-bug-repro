@@ -2,7 +2,7 @@ With both `cluster1` and `cluster2` deployed via the steps given in `reproductio
 `kubectl exec -it cluster1-pxc-0 env | grep MONITOR`
 `kubectl exec -it cluster2-pxc-0 env | grep MONITOR`
 
-You should observe that `cluster1` reports the env vars `MONITOR_HOST=%` and `MONITOR_PASSWORD=monitor`, while `cluster2` only reports `MONITOR_PASSWORD`.
+You should observe that `cluster1` reports the env vars `MONITOR_HOST=%` and `MONITOR_PASSWORD=monitor`, while `cluster2` only reports `MONITOR_PASSWORD=monitor`.
 
 Now observe this: https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.5.0/build/pxc-entrypoint.sh#L296
 
